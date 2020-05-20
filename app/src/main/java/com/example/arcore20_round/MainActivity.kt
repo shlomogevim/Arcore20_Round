@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun loadModel() {
+        Toast.makeText(this, "First load the Model ", Toast.LENGTH_LONG).show()
+
         download.setOnClickListener {
             ModelRenderable.builder()
                 .setSource(this, modelResourceId)
