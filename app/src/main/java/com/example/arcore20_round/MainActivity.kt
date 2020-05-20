@@ -10,15 +10,19 @@ import com.google.ar.sceneform.animation.ModelAnimator
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
+import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    //bee_drill selector = 1   onePlaceNode=false
+    //bee_drill selector = 1   goaround=false
+
 
     val selector = 2
+    val goAround = false
 
     var maxModelScale = 0.07f
     var minModelScale = 0.06f
@@ -40,10 +44,71 @@ class MainActivity : AppCompatActivity() {
         util = Util(this, arFragment)
 
         loadModel()
-
-        locateModel()
+        if (goAround) {
+            locateModelGoAround()
+        } else {
+            locateModelOnePlace()
+        }
 
     }
+
+    private fun locateModelOnePlace() {
+        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
+            val anchor = hitResult.createAnchor()
+            val anchorNode = AnchorNode(anchor)
+
+            val modelNode = TransformableNode(arFragment.transformationSystem).apply {
+                renderable = modelR
+                scaleController.maxScale = maxModelScale
+                scaleController.minScale = minModelScale
+                setParent(anchorNode)
+                getCurrentScene().addChild(anchorNode)
+                // select()
+                startAnimation(renderable as ModelRenderable)
+            }
+        }
+    }
+
+    private fun addNodeToSceneRound() {
+        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
+            val anchor = hitResult.createAnchor()
+            val anchorNode = AnchorNode(anchor)
+
+            val rotatingNode = RotatingNode(model.degreesPerSecond)
+                .apply {
+                    setParent(anchorNode)
+                }
+            Node().apply {
+                renderable = modelR
+                setParent(rotatingNode)
+                localPosition = Vector3(model.radius, model.height, 0f)
+                localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
+            }
+            arFragment.arSceneView.scene.addChild(anchorNode)
+            nodes.add(rotatingNode)
+            val animationData = modelR.getAnimationData(animationSring)
+            ModelAnimator(animationData, modelR).apply {
+                repeatCount = ModelAnimator.INFINITE
+                start()
+            }
+            util.eliminateDot()
+        }
+    }
+
+    private fun getCurrentScene() = arFragment.arSceneView.scene
+
+    private fun startAnimation(renderable: ModelRenderable) {
+        if (renderable.animationDataCount == 0) {
+            return
+        }
+        val animationData = renderable.getAnimationData(animationSring)
+        ModelAnimator(animationData, renderable).apply {
+            repeatCount = ModelAnimator.INFINITE
+            start()
+        }
+
+    }
+
 
     private fun setSelector() {
         when (selector) {
@@ -82,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun locateModel() {
+    private fun locateModelGoAround() {
         addNodeToSceneRound()
         arFragment.arSceneView.scene.addOnUpdateListener {
             curCameraPosition = arFragment.arSceneView.scene.camera.worldPosition
@@ -93,28 +158,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addNodeToSceneRound() {
-        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
-            val anchor = hitResult.createAnchor()
-            val anchorNode = AnchorNode(anchor)
-            val rotatingNode = RotatingNode(model.degreesPerSecond)
-                .apply {
-                    setParent(anchorNode)
-                }
-            Node().apply {
-                renderable = modelR
-                setParent(rotatingNode)
-                localPosition = Vector3(model.radius, model.height, 0f)
-                localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
-            }
-            arFragment.arSceneView.scene.addChild(anchorNode)
-            nodes.add(rotatingNode)
-            val animationData = modelR.getAnimationData(animationSring)
-            ModelAnimator(animationData, modelR).apply {
-                repeatCount = ModelAnimator.INFINITE
-                start()
-            }
-            util.eliminateDot()
-        }
-    }
+
 }
