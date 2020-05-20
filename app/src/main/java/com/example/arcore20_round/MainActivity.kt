@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     var animationSring = ""
 
     lateinit var arFragment: ArFragment
-    lateinit var modelRenderable: ModelRenderable
+    lateinit var modelR: ModelRenderable
     private var curCameraPosition = Vector3.zero()
     private val nodes = mutableListOf<RotatingNode>()
     private lateinit var util: Util
@@ -43,20 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         locateModel()
 
-
     }
-
-    private fun locateModel() {
-        arFragment.arSceneView.scene.addOnUpdateListener {
-            curCameraPosition = arFragment.arSceneView.scene.camera.worldPosition
-            for (node in nodes) {
-                node.worldPosition =
-                    Vector3(curCameraPosition.x, node.worldPosition.y, curCameraPosition.z)
-            }
-        }
-
-    }
-
 
     private fun setSelector() {
         when (selector) {
@@ -68,42 +55,17 @@ class MainActivity : AppCompatActivity() {
                 minModelScale = 0.06f
             }
         }
-
     }
-
-    /*private fun getData() {
-        val rendrebaleSource = RenderableSource.builder()
-            .setSource(this, Uri.parse(url), RenderableSource.SourceType.GLB)
-            // .setScale(scale)
-            .setRecenterMode(RenderableSource.RecenterMode.ROOT)
-            .build()
-        ModelRenderable.builder()
-            .setSource(this, rendrebaleSource)
-            .setRegistryId(Uri.parse(url))
-            .build()
-            .thenAccept {
-                modelRenderable = it
-                Toast.makeText(this, "Finish dDownload model Mr .", Toast.LENGTH_LONG).show()
-                // addNodeToScene(anchor,it)
-            }.exceptionally {
-                Log.e("clima", "Somthing go wrong in loading model")
-                null
-            }
-
-    }*/
-
-
 
 
     private fun loadModel() {
-        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
-           // loadModelAndAddToSceneRound(hitResult.createAnchor(), modelResourceId)
+        download.setOnClickListener {
             ModelRenderable.builder()
                 .setSource(this, modelResourceId)
                 .build()
-                .thenAccept { modelRenderable ->
-                    addNodeToSceneRound(hitResult.createAnchor(), modelRenderable)
-                    //util.eliminateDot()
+                .thenAccept {
+                    modelR = it
+                    Toast.makeText(this, "Finish dDownload model Mr .", Toast.LENGTH_LONG).show()
                 }.exceptionally {
                     Toast.makeText(this, "Error creating node: $it", Toast.LENGTH_LONG).show()
                     null
@@ -111,29 +73,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun addNodeToSceneRound(
-        anchor: Anchor,
-        modelRenderable: ModelRenderable
-
-    ) {
-        val anchorNode = AnchorNode(anchor)
-        val rotatingNode = RotatingNode(model.degreesPerSecond)
-            .apply {
-                setParent(anchorNode)
+    private fun locateModel() {
+        addNodeToSceneRound()
+        arFragment.arSceneView.scene.addOnUpdateListener {
+            curCameraPosition = arFragment.arSceneView.scene.camera.worldPosition
+            for (node in nodes) {
+                node.worldPosition =
+                    Vector3(curCameraPosition.x, node.worldPosition.y, curCameraPosition.z)
             }
-        Node().apply {
-            renderable = modelRenderable
-            setParent(rotatingNode)
-            localPosition = Vector3(model.radius, model.height, 0f)
-            localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
         }
-        arFragment.arSceneView.scene.addChild(anchorNode)
-        nodes.add(rotatingNode)
-        val animationData = modelRenderable.getAnimationData(animationSring)
-        ModelAnimator(animationData, modelRenderable).apply {
-            repeatCount = ModelAnimator.INFINITE
-            start()
+    }
+
+    private fun addNodeToSceneRound() {
+        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
+            val anchor = hitResult.createAnchor()
+            val anchorNode = AnchorNode(anchor)
+            val rotatingNode = RotatingNode(model.degreesPerSecond)
+                .apply {
+                    setParent(anchorNode)
+                }
+            Node().apply {
+                renderable = modelR
+                setParent(rotatingNode)
+                localPosition = Vector3(model.radius, model.height, 0f)
+                localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
+            }
+            arFragment.arSceneView.scene.addChild(anchorNode)
+            nodes.add(rotatingNode)
+            val animationData = modelR.getAnimationData(animationSring)
+            ModelAnimator(animationData, modelR).apply {
+                repeatCount = ModelAnimator.INFINITE
+                start()
+            }
+            util.eliminateDot()
         }
     }
 }
