@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     //bee_drill selector = 1   onePlaceNode=false
 
-    val selector = 1
+    val selector = 2
 
     var maxModelScale = 0.07f
     var minModelScale = 0.06f
@@ -51,6 +51,13 @@ class MainActivity : AppCompatActivity() {
                 model = Models.Bee
                 modelResourceId = R.raw.beedrill
                 animationSring = "Beedrill_Animation"
+                maxModelScale = 0.07f
+                minModelScale = 0.06f
+            }
+            2 -> {
+                model = Models.Fish
+                modelResourceId = R.raw.sarfish
+                animationSring = "Armature|ArmatureAction"
                 maxModelScale = 0.07f
                 minModelScale = 0.06f
             }

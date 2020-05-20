@@ -17,6 +17,16 @@ sealed class Models {
         override val rotationDegrees: Float
             get() = 180f
     }
+    object Fish : Models() {
+        override val degreesPerSecond: Float
+            get() = 10f
+        override val radius: Float
+            get() = 4f
+        override val height: Float
+            get() = 0.7f
+        override val rotationDegrees: Float
+            get() = 180f
+    }
     object Dance : Models() {
         override val degreesPerSecond: Float
             get() = 20f
@@ -48,17 +58,6 @@ sealed class Models {
         override val rotationDegrees: Float
             get() = 180f
     }
-    object Fish : Models() {
-        override val degreesPerSecond: Float
-            get() = 25f
-        override val radius: Float
-            get() = 10f
-        override val height: Float
-            get() = 0.7f
-        override val rotationDegrees: Float
-            get() = 180f
-    }
-
 
     object Boat : Models() {
         override val degreesPerSecond: Float

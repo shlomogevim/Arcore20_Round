@@ -1,0 +1,120 @@
+{
+  animations: [
+    {
+      clips: [
+        {
+          name: 'Armature|ArmatureAction',
+        },
+      ],
+      path: 'sampledata/models/fish/Sar-Fish.fbx',
+    },
+    {
+      path: 'sampledata/models/bee_drill/fish/Sar-Fish.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'Material.001',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'SAR texture',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'Material.002',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: null,
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/models/fish/Sar-Fish.fbx',
+    name: 'Sar-Fish',
+    recenter: 'root',
+    scale: 0.2,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/fish\\SAR texture.png',
+      name: 'SAR texture',
+      pipeline_name: 'SAR texture.png',
+    },
+    {
+      file: 'sampledata/models/fish\\eye sar.png',
+      name: 'eye sar',
+      pipeline_name: 'eye sar.png',
+    },
+  ],
+  version: '0.54:2',
+}
