@@ -9,7 +9,7 @@ sealed class Models {
 
     object Bee : Models() {
         override val degreesPerSecond: Float
-            get() = 15f
+            get() = 35f
         override val radius: Float
             get() = 5f
         override val height: Float

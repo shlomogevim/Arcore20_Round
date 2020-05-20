@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 .setSource(this, modelResourceId)
                 .build()
                 .thenAccept { modelRenderable ->
-                    addNodeToSceneRound(hitResult.createAnchor(), modelRenderable, model)
+                    addNodeToSceneRound(hitResult.createAnchor(), modelRenderable)
                     //util.eliminateDot()
                 }.exceptionally {
                     Toast.makeText(this, "Error creating node: $it", Toast.LENGTH_LONG).show()
@@ -114,19 +114,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun addNodeToSceneRound(
         anchor: Anchor,
-        modelRenderable: ModelRenderable,
-        spaceship: Models
+        modelRenderable: ModelRenderable
+
     ) {
         val anchorNode = AnchorNode(anchor)
-        val rotatingNode = RotatingNode(spaceship.degreesPerSecond)
+        val rotatingNode = RotatingNode(model.degreesPerSecond)
             .apply {
                 setParent(anchorNode)
             }
         Node().apply {
             renderable = modelRenderable
             setParent(rotatingNode)
-            localPosition = Vector3(spaceship.radius, spaceship.height, 0f)
-            localRotation = Quaternion.eulerAngles(Vector3(0f, spaceship.rotationDegrees, 0f))
+            localPosition = Vector3(model.radius, model.height, 0f)
+            localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
         }
         arFragment.arSceneView.scene.addChild(anchorNode)
         nodes.add(rotatingNode)
