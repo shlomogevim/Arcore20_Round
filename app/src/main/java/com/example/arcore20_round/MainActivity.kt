@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
 
+
             val modelNode = TransformableNode(arFragment.transformationSystem).apply {
                 renderable = modelR
                 scaleController.maxScale = maxModelScale
@@ -65,9 +66,18 @@ class MainActivity : AppCompatActivity() {
                 getCurrentScene().addChild(anchorNode)
                 // select()
                 startAnimation(renderable as ModelRenderable)
+                util.eliminateDot()
             }
         }
     }
+    /*  Node().apply {
+            renderable = modelRenderable
+            setParent(rotatingNode)
+            localScale = Vector3(model.scale, model.scale, model.scale)
+            localPosition = Vector3(model.radius, model.height, 0f)
+            localRotation = Quaternion.eulerAngles(Vector3(180f, model.rotationDegrees, 180f))
+        }
+      arFragment.arSceneView.scene.addChild(anchoreNode)*/
 
     private fun addNodeToSceneRound() {
         arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
@@ -133,7 +143,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadModel() {
         Toast.makeText(this, "First load the Model ", Toast.LENGTH_LONG).show()
 
-        download.setOnClickListener {
+      //  download.setOnClickListener {
             ModelRenderable.builder()
                 .setSource(this, modelResourceId)
                 .build()
@@ -144,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error creating node: $it", Toast.LENGTH_LONG).show()
                     null
                 }
-        }
+     //   }
     }
 
     private fun locateModelGoAround() {
