@@ -1,0 +1,138 @@
+{
+  animations: [
+    {
+      path: 'sampledata/models/dancer/biomutantdance_motionplus0.fbx',
+    },
+    {
+      clips: [
+        {
+          name: 'Default',
+        },
+        {
+          name: 'motionplus0',
+        },
+      ],
+      path: 'sampledata/models/dancer/biomutantdance_motionplus0.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'uv_1',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'uv_1_Diffuse',
+        },
+        {
+          normalMap: 'uv_1_Normal',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'uv_2',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'uv_2_Diffuse',
+        },
+        {
+          normalMap: 'uv_2_Normal',
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/models/dancer/biomutantdance_motionplus0.fbx',
+    name: 'biomutantdance_motionplus0',
+    recenter: 'root',
+      },
+  samplers: [
+    {
+      file: 'sampledata/models/dancer\\biomutantdance_motionplus0.fbm\\uv_1_Diffuse.png',
+      name: 'uv_1_Diffuse',
+      pipeline_name: 'biomutantdance_motionplus0.fbm\\uv_1_Diffuse.png',
+    },
+    {
+      file: 'sampledata/models/dancer\\biomutantdance_motionplus0.fbm\\uv_1_Normal.png',
+      name: 'uv_1_Normal',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'biomutantdance_motionplus0.fbm\\uv_1_Normal.png',
+    },
+    {
+      file: 'sampledata/models/dancer\\biomutantdance_motionplus0.fbm\\uv_2_Diffuse.png',
+      name: 'uv_2_Diffuse',
+      pipeline_name: 'biomutantdance_motionplus0.fbm\\uv_2_Diffuse.png',
+    },
+    {
+      file: 'sampledata/models/dancer\\biomutantdance_motionplus0.fbm\\uv_2_Normal.png',
+      name: 'uv_2_Normal',
+      params: {
+        usage_type: 'Normal',
+      },
+      pipeline_name: 'biomutantdance_motionplus0.fbm\\uv_2_Normal.png',
+    },
+  ],
+  version: '0.54:2',
+}
