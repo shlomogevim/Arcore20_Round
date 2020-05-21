@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
 
     val selector = 2
-    val goAround = false
+    val goAround = true
 
     var maxModelScale = 0.07f
     var minModelScale = 0.06f
@@ -56,28 +56,20 @@ class MainActivity : AppCompatActivity() {
         arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
-
-
-            val modelNode = TransformableNode(arFragment.transformationSystem).apply {
-                renderable = modelR
-                scaleController.maxScale = maxModelScale
-                scaleController.minScale = minModelScale
+            getCurrentScene().addChild(anchorNode)
+            Node().apply {
+                renderable=modelR
                 setParent(anchorNode)
-                getCurrentScene().addChild(anchorNode)
-                // select()
+                localScale= Vector3(0.05f,0.05f,0.05f)
+                localPosition=Vector3(0.0f,0.7f,0.0f)        //x,z,y
+                localRotation = Quaternion.eulerAngles(Vector3(0f, 180f, 0f))
                 startAnimation(renderable as ModelRenderable)
                 util.eliminateDot()
             }
+
+
         }
     }
-    /*  Node().apply {
-            renderable = modelRenderable
-            setParent(rotatingNode)
-            localScale = Vector3(model.scale, model.scale, model.scale)
-            localPosition = Vector3(model.radius, model.height, 0f)
-            localRotation = Quaternion.eulerAngles(Vector3(180f, model.rotationDegrees, 180f))
-        }
-      arFragment.arSceneView.scene.addChild(anchoreNode)*/
 
     private fun addNodeToSceneRound() {
         arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
