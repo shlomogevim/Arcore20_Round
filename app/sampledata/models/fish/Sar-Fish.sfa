@@ -102,7 +102,7 @@
     file: 'sampledata/models/fish/Sar-Fish.fbx',
     name: 'Sar-Fish',
     recenter: 'root',
-    scale: 0.2,
+    scale: 0.1,
   },
   samplers: [
     {

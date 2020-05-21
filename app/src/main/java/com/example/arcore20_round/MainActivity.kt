@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     val selector = 2
     val goAround = true
+    val rotateAroundCamera=true
 
     var maxModelScale = 0.07f
     var minModelScale = 0.06f
@@ -82,11 +83,11 @@ class MainActivity : AppCompatActivity() {
                 renderable = modelR
                 setParent(rotatingNode)
                 localScale= Vector3(1.0f,1.0f,1.0f)
-                localPosition = Vector3(6f, 0.15f, 0f)  //radius,hight
+                localPosition = Vector3(6f, 0.05f, 0f)  //radius,hight
                 localRotation = Quaternion.eulerAngles(Vector3(0f, 0f, 0f))
             }
             arFragment.arSceneView.scene.addChild(anchorNode)
-            nodes.add(rotatingNode)
+         if (rotateAroundCamera)   nodes.add(rotatingNode)
             val animationData = modelR.getAnimationData(animationSring)
             ModelAnimator(animationData, modelR).apply {
                 repeatCount = ModelAnimator.INFINITE
@@ -150,11 +151,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun locateModelGoAround() {
         addNodeToSceneRound()
-        arFragment.arSceneView.scene.addOnUpdateListener {
-            curCameraPosition = arFragment.arSceneView.scene.camera.worldPosition
-            for (node in nodes) {
-                node.worldPosition =
-                    Vector3(curCameraPosition.x, node.worldPosition.y, curCameraPosition.z)
+        if (rotateAroundCamera) {
+            arFragment.arSceneView.scene.addOnUpdateListener {
+                curCameraPosition = arFragment.arSceneView.scene.camera.worldPosition
+                for (node in nodes) {
+                    node.worldPosition =
+                        Vector3(curCameraPosition.x, node.worldPosition.y, curCameraPosition.z)
+                }
             }
         }
     }
