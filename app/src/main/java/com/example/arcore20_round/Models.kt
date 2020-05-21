@@ -19,7 +19,7 @@ sealed class Models {
     }
     object Fish : Models() {
         override val degreesPerSecond: Float
-            get() = 10f
+            get() = 4f
         override val radius: Float
             get() = 4f
         override val height: Float

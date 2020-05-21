@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity() {
                 startAnimation(renderable as ModelRenderable)
                 util.eliminateDot()
             }
-
-
         }
     }
 
@@ -83,8 +81,9 @@ class MainActivity : AppCompatActivity() {
             Node().apply {
                 renderable = modelR
                 setParent(rotatingNode)
-                localPosition = Vector3(model.radius, model.height, 0f)
-                localRotation = Quaternion.eulerAngles(Vector3(0f, model.rotationDegrees, 0f))
+                localScale= Vector3(1.0f,1.0f,1.0f)
+                localPosition = Vector3(6f, 0.15f, 0f)  //radius,hight
+                localRotation = Quaternion.eulerAngles(Vector3(0f, 0f, 0f))
             }
             arFragment.arSceneView.scene.addChild(anchorNode)
             nodes.add(rotatingNode)
