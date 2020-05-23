@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
 
 
     val selector = 2
-    val goAround = true
+    val goAround = false
+
     val rotateAroundCamera=true
 
     var maxModelScale = 0.07f
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             locateModelOnePlace()
         }
+        util.activateButtom()
 
     }
 
@@ -62,8 +64,8 @@ class MainActivity : AppCompatActivity() {
                 renderable=modelR
                 setParent(anchorNode)
                 localScale= Vector3(0.05f,0.05f,0.05f)
-                localPosition=Vector3(0.0f,0.7f,0.0f)        //x,z,y
-                localRotation = Quaternion.eulerAngles(Vector3(0f, 180f, 0f))
+                localPosition=Vector3(0.0f,1.4f,0f)        //x,z,y
+                localRotation = Quaternion.eulerAngles(Vector3(0f, 90f, 0f))
                 startAnimation(renderable as ModelRenderable)
                 util.eliminateDot()
             }
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
 
-            val rotatingNode = RotatingNode(model.degreesPerSecond)
+            val rotatingNode = RotatingNode(1.0f)
                 .apply {
                     setParent(anchorNode)
                 }
